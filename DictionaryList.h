@@ -11,11 +11,11 @@ public:
     //copy constructor
     DictionaryList(const DictionaryList& dictionaryList) {
         if (dictionaryList.head_ != nullptr) {
-            head_ = new Node(*dictionaryList.head_); //todo bad_alloc
+            head_ = new Node(*dictionaryList.head_);
             Node* currentNode = head_;
             Node* currentNodeOfOther = dictionaryList.head_->nextNode;
             while (currentNodeOfOther!=nullptr) {
-                currentNode->nextNode = new Node(*currentNodeOfOther);//todo bad_alloc
+                currentNode->nextNode = new Node(*currentNodeOfOther);
                 currentNodeOfOther = currentNodeOfOther->nextNode;
                 currentNode = currentNode->nextNode;
             }
@@ -24,6 +24,7 @@ public:
 
     //move constructor
     DictionaryList(DictionaryList&& dictionaryList) noexcept {
+        std::cout << "move constr!\n";
         std::swap(head_, dictionaryList.head_);
     }
 
@@ -38,6 +39,10 @@ public:
 
     //copy assignment operator
     DictionaryList<KeyT>& operator=(const DictionaryList<KeyT>& dictionaryList) {
+        if (&dictionaryList == this) {
+            return *this;
+        }
+
         DictionaryList dictionaryListCopy(dictionaryList);
         swap(dictionaryListCopy);
         return *this;
@@ -51,7 +56,7 @@ public:
 
     bool insert(const KeyT& element) {
         if (head_ == nullptr) {
-            head_ = new Node(element, nullptr); //todo bad_alloc
+            head_ = new Node(element, nullptr);
             return true;
         }
 
@@ -68,7 +73,7 @@ public:
                 return true;
             }
             if ((prevNode == nullptr) && (element < currentNode->data)) {
-                Node* newNode = new Node(element, head_); //todo bad_alloc
+                Node* newNode = new Node(element, head_);
                 head_ = newNode;
                 return true;
             }
@@ -77,7 +82,7 @@ public:
             currentNode = currentNode->nextNode;
         }
         if (prevNode != nullptr && prevNode->data < element) {
-            prevNode->nextNode = new Node(element, nullptr); //todo bad_alloc
+            prevNode->nextNode = new Node(element, nullptr);
             return true;
         }
         return false;
@@ -120,29 +125,75 @@ public:
     }
 
     void merge(DictionaryList& other) {
-        Node* otherNode = other.head_;
-        if (other.head_->data < head_->data) {
-            otherNode = other.head_->nextNode;
-            other.head_->nextNode = head_;
-            head_ = other.head_;
+        if (&other == this) {
+            return;
         }
 
         Node* currentNode = head_;
-        while (currentNode->nextNode != nullptr && otherNode != nullptr) {
-            if (currentNode->data < otherNode->data && currentNode->nextNode->data > otherNode->data) {
-                Node* nodeToInsert = otherNode;
-                nodeToInsert->nextNode = currentNode->nextNode;
-                currentNode->nextNode = nodeToInsert;
+        Node* otherNode = other.head_;
 
-                otherNode = otherNode->nextNode;
-                continue;
-            }
+        if (otherNode == nullptr) {
+            return;
+        }
+        if (currentNode == nullptr) {
+            head_ = other.head_;
+            other.head_ = nullptr;
+            return;
+        }
+
+        Node* newNode = nullptr;
+        if (currentNode->data < otherNode->data) {
+            newNode = currentNode;
             currentNode = currentNode->nextNode;
         }
-        if (otherNode != nullptr) {
-            currentNode->nextNode = otherNode;
+        else if (currentNode->data > otherNode->data) {
+            newNode = otherNode;
+            otherNode = otherNode->nextNode;
+        }
+        else {
+            newNode = currentNode;
+            currentNode = currentNode->nextNode;
+            otherNode = otherNode->nextNode;
+        }
+        Node* newHead = newNode;
+
+        while (currentNode != nullptr || otherNode != nullptr) {
+            if (currentNode == nullptr) {
+                newNode->nextNode = otherNode;
+                otherNode = otherNode->nextNode;
+                newNode = newNode->nextNode;
+                continue;
+            }
+            if (otherNode == nullptr) {
+                newNode->nextNode = currentNode;
+                currentNode = currentNode->nextNode;
+                newNode = newNode->nextNode;
+                continue;
+            }
+
+            if (currentNode->data < otherNode->data) {
+                newNode->nextNode = currentNode;
+                currentNode = currentNode->nextNode;
+                newNode = newNode->nextNode;
+                continue;
+            }
+            if (otherNode->data < currentNode->data) {
+                newNode->nextNode = otherNode;
+                otherNode = otherNode->nextNode;
+                newNode = newNode->nextNode;
+                continue;
+            }
+            if (otherNode->data == currentNode->data) {
+                newNode->nextNode = currentNode;
+                currentNode = currentNode->nextNode;
+                otherNode = otherNode->nextNode;
+                newNode = newNode->nextNode;
+                continue;
+            }
         }
 
+        newNode->nextNode = nullptr;
+        head_ = newHead;
         other.head_ = nullptr;
     }
 

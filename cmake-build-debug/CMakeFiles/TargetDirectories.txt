@@ -1,0 +1,3 @@
+/home/artem/spbstu/sem2/aisd/DictData/Dict/cmake-build-debug/CMakeFiles/Dict.dir
+/home/artem/spbstu/sem2/aisd/DictData/Dict/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/artem/spbstu/sem2/aisd/DictData/Dict/cmake-build-debug/CMakeFiles/rebuild_cache.dir

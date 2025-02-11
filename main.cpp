@@ -3,8 +3,7 @@
 #include "DictionaryList.h"
 
 // Тестирование словаря
-void dictionaryTest()
-{
+void dictionaryTest() {
     // Создание списка
     DictionaryList<int> dictInt;
     // bool insert(const KeyT& key)
@@ -13,8 +12,7 @@ void dictionaryTest()
     dictInt.insert(5);
     dictInt.insert(7);
     // вставка нового элемента
-    if (dictInt.insert(1))
-    {
+    if (dictInt.insert(1)) {
         std::cout << "inserted\n";
     }
 
@@ -24,16 +22,14 @@ void dictionaryTest()
     // Поиск элемента
     // bool search(const KeyT& key)
     // существующие элементы
-    if (dictInt.search(1))
-    {
+    if (dictInt.search(1)) {
         std::cout << "found\n";
     }
 
     // Удаление элементов
     // bool remove(const KeyT& key)
     // существующие элементы
-    if (dictInt.remove(5))
-    {
+    if (dictInt.remove(5)) {
         std::cout << "deleted\n";
     }
 
@@ -80,8 +76,455 @@ void dictionaryTest()
     std::cout << dictInt4 << '\n';
 }
 
-int main()
-{
-    dictionaryTest();
+void testCopyConstructor() {
+    std::cout << "#################################\n";
+    std::cout << "testCopyConstructor:\n\n";
+    DictionaryList<int> dict1 = DictionaryList<int>();
+
+    dict1.insert(20);
+    dict1.insert(5);
+    dict1.insert(0);
+    dict1.insert(8);
+    dict1.insert(7);
+
+    std::cout << "dict 1 created:\n" << dict1 << "\n\n";
+
+    std::cout << "Try dict2(dict1)\n\n";
+
+    DictionaryList<int> dict2 = DictionaryList<int>(dict1);
+
+    std::cout << "dict1:\n" << dict1 << "\n\n";
+    std::cout << "dict2:\n" << dict2 << "\n\n";
+
+    std::cout << "Try dict1.remove(5)\n";
+    dict1.remove(5);
+    std::cout << "dict1:\n" << dict1 << "\n\n";
+    std::cout << "dict2:\n" << dict2 << "\n\n";
+    std::cout << "#################################\n";
+}
+
+void testCopyAssignment() {
+    std::cout << "#################################\n";
+    std::cout << "testCopyAssignment:\n\n";
+    DictionaryList<int> dict1 = DictionaryList<int>();
+
+    dict1.insert(20);
+    dict1.insert(5);
+    dict1.insert(0);
+    dict1.insert(8);
+    dict1.insert(7);
+
+    std::cout << "dict 1 created:\n" << dict1 << "\n\n";
+
+    DictionaryList<int> dict2 = DictionaryList<int>();
+
+    dict2.insert(3);
+    dict2.insert(2);
+    dict2.insert(6);
+    dict2.insert(11);
+    dict2.insert(0);
+
+    std::cout << "dict 2 created:\n" << dict2 << "\n\n";
+
+    std::cout << "Try dict1 = dict2\n\n";
+
+    dict1 = dict2;
+
+    std::cout << "dict1:\n" << dict1 << "\n\n";
+    std::cout << "dict2:\n" << dict2 << "\n\n";
+
+    std::cout << "Try dict2.insert(500):\n";
+    dict2.insert(500);
+    std::cout << "dict1:\n" << dict1 << "\n\n";
+    std::cout << "dict2:\n" << dict2 << "\n";
+    std::cout << "#################################\n";
+}
+
+void testCopySelfAssignment() {
+    std::cout << "#################################\n";
+    std::cout << "testCopySelfAssignment:\n\n";
+    DictionaryList<int> dict1 = DictionaryList<int>();
+
+    dict1.insert(20);
+    dict1.insert(5);
+    dict1.insert(0);
+    dict1.insert(8);
+    dict1.insert(7);
+
+    std::cout << "dict 1 created:\n" << dict1 << "\n\n";
+
+    std::cout << "Try dict1 = dict1\n\n";
+
+    dict1 = dict1;
+
+    std::cout << "dict1:\n" << dict1 << "\n\n";
+    std::cout << "#################################\n";
+}
+
+
+void testMoveConstructor() {
+    std::cout << "#################################\n";
+    std::cout << "testMoveConstructor:\n\n";
+    DictionaryList<int> dict1 = DictionaryList<int>();
+
+    dict1.insert(10);
+    dict1.insert(500);
+    dict1.insert(9);
+    dict1.insert(12);
+    dict1.insert(18);
+
+
+    std::cout << "dict 1 created:\n" << dict1 << "\n\n";
+
+    std::cout << "Try dict2(dict(dict1))\n\n";
+
+    DictionaryList<int> dict2 = DictionaryList<int>();
+
+    std::cout << "dict1:\n" << dict1 << "\n\n";
+    std::cout << "dict2:\n" << dict2 << "\n\n";
+    std::cout << "#################################\n";
+}
+
+
+
+void testInsert() {
+    std::cout << "#################################\n";
+    std::cout << "testInsert:\n\n";
+    DictionaryList<int> dict1 = DictionaryList<int>();
+
+    dict1.insert(10);
+    dict1.insert(500);
+
+
+    std::cout << "dict 1 created:\n" << dict1 << "\n\n";
+
+    std::cout << "Try dict1.insert(7)\n\n";
+    bool b1 = dict1.insert(7);
+    std::cout << "dict1:\n" << dict1 << "\n";
+    std::cout << "Result of insert: " << b1 << "\n\n";
+
+    std::cout << "Try dict1.insert(9)\n\n";
+    bool b2 = dict1.insert(9);
+    std::cout << "dict1:\n" << dict1 << "\n";
+    std::cout << "Result of insert: " << b2 << "\n\n";
+
+    std::cout << "Try dict1.insert(500)\n\n";
+    bool b3 = dict1.insert(500);
+    std::cout << "dict1:\n" << dict1 << "\n";
+    std::cout << "Result of insert: " << b3 << "\n\n";
+
+
+    std::cout << "#################################\n";
+}
+
+void testInsertToEmpty() {
+    std::cout << "#################################\n";
+    std::cout << "testInsertToEmpty:\n\n";
+    DictionaryList<int> dict1 = DictionaryList<int>();
+
+    std::cout << "dict 1 created:\n" << dict1 << "\n\n";
+
+
+    std::cout << "Try dict1.insert(9)\n\n";
+    bool b2 = dict1.insert(9);
+    std::cout << "dict1:\n" << dict1 << "\n";
+    std::cout << "Result of insert: " << b2 << "\n\n";
+
+    std::cout << "Try dict1.insert(7)\n\n";
+    bool b1 = dict1.insert(7);
+    std::cout << "dict1:\n" << dict1 << "\n";
+    std::cout << "Result of insert: " << b1 << "\n\n";
+
+    std::cout << "Try dict1.insert(500)\n\n";
+    bool b3 = dict1.insert(500);
+    std::cout << "dict1:\n" << dict1 << "\n";
+    std::cout << "Result of insert: " << b3 << "\n\n";
+
+
+    std::cout << "#################################\n";
+}
+
+
+
+void testRemove() {
+    std::cout << "#################################\n";
+    std::cout << "testRemove:\n\n";
+    DictionaryList<int> dict1 = DictionaryList<int>();
+    dict1.insert(20);
+    dict1.insert(90);
+    dict1.insert(10);
+    dict1.insert(3);
+    dict1.insert(8);
+    dict1.insert(0);
+    std::cout << "dict 1 created:\n" << dict1 << "\n\n";
+
+
+    std::cout << "Try dict1.remove(100000)\n\n";
+    bool b1 = dict1.remove(100000);
+    std::cout << "dict1:\n" << dict1 << "\n";
+    std::cout << "Result of remove: " << b1 << "\n\n";
+
+    std::cout << "Try dict1.remove(8)\n\n";
+    bool b2 = dict1.remove(8);
+    std::cout << "dict1:\n" << dict1 << "\n";
+    std::cout << "Result of remove: " << b2 << "\n\n";
+
+    std::cout << "Try dict1.remove(90)\n\n";
+    bool b3 = dict1.remove(90);
+    std::cout << "dict1:\n" << dict1 << "\n";
+    std::cout << "Result of remove: " << b3 << "\n\n";
+
+
+    std::cout << "#################################\n";
+}
+
+void testRemoveEmpty() {
+    std::cout << "#################################\n";
+    std::cout << "testRemoveEmpty:\n\n";
+    DictionaryList<int> dict1 = DictionaryList<int>();
+    std::cout << "dict 1 created:\n" << dict1 << "\n\n";
+
+
+    std::cout << "Try dict1.remove(100000)\n\n";
+    bool b1 = dict1.remove(100000);
+    std::cout << "dict1:\n" << dict1 << "\n";
+    std::cout << "Result of remove: " << b1 << "\n\n";
+
+
+    std::cout << "#################################\n";
+}
+
+
+
+void testSearch() {
+    std::cout << "#################################\n";
+    std::cout << "testSearch:\n\n";
+    DictionaryList<int> dict1 = DictionaryList<int>();
+    dict1.insert(8);
+    dict1.insert(10);
+    dict1.insert(55);
+    dict1.insert(3);
+    dict1.insert(100);
+    std::cout << "dict 1 created:\n" << dict1 << "\n\n";
+
+
+    std::cout << "Try dict1.search(10)\n";
+    bool b1 = dict1.search(10);
+    std::cout << "Result of search: " << b1 << "\n\n";
+
+    std::cout << "Try dict1.search(55)\n";
+    bool b2 = dict1.search(55);
+    std::cout << "Result of search: " << b2 << "\n\n";
+
+    std::cout << "Try dict1.search(99999)\n";
+    bool b3 = dict1.search(99999);
+    std::cout << "Result of search: " << b3 << "\n\n";
+
+
+    std::cout << "#################################\n";
+}
+
+void testSearchEmpty() {
+    std::cout << "#################################\n";
+    std::cout << "testSearchEmpty:\n\n";
+    DictionaryList<int> dict1 = DictionaryList<int>();
+    std::cout << "dict 1 created:\n" << dict1 << "\n\n";
+
+
+    std::cout << "Try dict1.search(30)\n";
+    bool b1 = dict1.search(30);
+    std::cout << "Result of search: " << b1 << "\n\n";
+
+    std::cout << "Try dict1.search(0)\n";
+    bool b2 = dict1.search(0);
+    std::cout << "Result of search: " << b2 << "\n\n";
+
+
+
+    std::cout << "#################################\n";
+}
+
+
+void testMerge() {
+    std::cout << "#################################\n";
+    std::cout << "testMerge:\n\n";
+    DictionaryList<int> dict1 = DictionaryList<int>();
+    dict1.insert(2);
+    dict1.insert(1);
+    dict1.insert(4);
+    dict1.insert(5);
+    dict1.insert(3);
+    dict1.insert(70);
+    dict1.insert(32);
+    std::cout << "dict 1 created:\n" << dict1 << "\n\n";
+
+
+    DictionaryList<int> dict2 = DictionaryList<int>();
+    dict2.insert(2);
+    dict2.insert(1);
+    dict2.insert(4);
+    dict2.insert(60);
+    dict2.insert(10);
+    std::cout << "dict 2 created:\n" << dict2 << "\n\n";
+
+
+    std::cout << "Try dict1.merge(dict2)\n";
+    dict1.merge(dict2);
+    std::cout << "dict 1:\n" << dict1 << "\n";
+    std::cout << "dict 2:\n" << dict2 << "\n";
+
+
+    std::cout << "#################################\n";
+}
+
+void testMergeSelf() {
+    std::cout << "#################################\n";
+    std::cout << "testMergeSelf:\n\n";
+    DictionaryList<int> dict1 = DictionaryList<int>();
+    dict1.insert(2);
+    dict1.insert(1);
+    dict1.insert(4);
+    dict1.insert(5);
+    dict1.insert(3);
+    dict1.insert(70);
+    dict1.insert(32);
+    std::cout << "dict 1 created:\n" << dict1 << "\n\n";
+
+
+    std::cout << "Try dict1.merge(dict1)\n";
+    dict1.merge(dict1);
+    std::cout << "dict 1:\n" << dict1 << "\n";
+
+    std::cout << "#################################\n";
+}
+
+void testMergeCopy() {
+    std::cout << "#################################\n";
+    std::cout << "testMergeCopy:\n\n";
+    DictionaryList<int> dict1 = DictionaryList<int>();
+    dict1.insert(2);
+    dict1.insert(1);
+    dict1.insert(4);
+    dict1.insert(5);
+    dict1.insert(3);
+    dict1.insert(70);
+    dict1.insert(32);
+    std::cout << "dict 1 created:\n" << dict1 << "\n\n";
+
+    DictionaryList<int> dict2 = DictionaryList<int>();
+    dict2.insert(2);
+    dict2.insert(1);
+    dict2.insert(4);
+    dict2.insert(5);
+    dict2.insert(3);
+    dict2.insert(70);
+    dict2.insert(32);
+    std::cout << "dict 2 created:\n" << dict2 << "\n\n";
+
+
+    std::cout << "Try dict1.merge(dict2)\n";
+    dict1.merge(dict2);
+    std::cout << "dict 1:\n" << dict1 << "\n";
+    std::cout << "dict 2:\n" << dict2 << "\n";
+
+    std::cout << "#################################\n";
+}
+
+void testMergeEmptyToFull() {
+    std::cout << "#################################\n";
+    std::cout << "testMergeEmptyToFull:\n\n";
+    DictionaryList<int> dict1 = DictionaryList<int>();
+    std::cout << "dict 1 created:\n" << dict1 << "\n\n";
+
+    DictionaryList<int> dict2 = DictionaryList<int>();
+    dict2.insert(2);
+    dict2.insert(1);
+    dict2.insert(4);
+    dict2.insert(5);
+    dict2.insert(3);
+    dict2.insert(70);
+    dict2.insert(32);
+    std::cout << "dict 2 created:\n" << dict2 << "\n\n";
+
+
+    std::cout << "Try dict1.merge(dict2)\n";
+    dict1.merge(dict2);
+    std::cout << "dict 1:\n" << dict1 << "\n";
+    std::cout << "dict 2:\n" << dict2 << "\n";
+
+    std::cout << "#################################\n";
+}
+
+void testMergeFullToEmpty() {
+    std::cout << "#################################\n";
+    std::cout << "testMergeFullToEmpty:\n\n";
+    DictionaryList<int> dict1 = DictionaryList<int>();
+    dict1.insert(2);
+    dict1.insert(1);
+    dict1.insert(4);
+    dict1.insert(5);
+    dict1.insert(3);
+    dict1.insert(70);
+    dict1.insert(32);
+    std::cout << "dict 1 created:\n" << dict1 << "\n\n";
+
+    DictionaryList<int> dict2 = DictionaryList<int>();
+    std::cout << "dict 2 created:\n" << dict2 << "\n\n";
+
+
+    std::cout << "Try dict1.merge(dict2)\n";
+    dict1.merge(dict2);
+    std::cout << "dict 1:\n" << dict1 << "\n";
+    std::cout << "dict 2:\n" << dict2 << "\n";
+
+    std::cout << "#################################\n";
+}
+
+void testMergeEmpties() {
+    std::cout << "#################################\n";
+    std::cout << "testMergeEmpties:\n\n";
+    DictionaryList<int> dict1 = DictionaryList<int>();
+
+    std::cout << "dict 1 created:\n" << dict1 << "\n\n";
+
+    DictionaryList<int> dict2 = DictionaryList<int>();
+
+    std::cout << "dict 2 created:\n" << dict2 << "\n\n";
+
+
+    std::cout << "Try dict1.merge(dict2)\n";
+    dict1.merge(dict2);
+    std::cout << "dict 1:\n" << dict1 << "\n";
+    std::cout << "dict 2:\n" << dict2 << "\n";
+
+    std::cout << "#################################\n";
+}
+
+void myTests() {
+    testCopyConstructor();
+    testCopyAssignment();
+    testCopySelfAssignment();
+
+    testMoveConstructor();
+
+    testInsert();
+    testInsertToEmpty();
+
+    testRemove();
+    testRemoveEmpty();
+
+    testSearch();
+    testSearchEmpty();
+
+    testMerge();
+    testMergeSelf();
+    testMergeCopy();
+    testMergeEmptyToFull();
+    testMergeFullToEmpty();
+    testMergeEmpties();
+}
+
+int main() {
+    myTests();
     return 0;
 }
