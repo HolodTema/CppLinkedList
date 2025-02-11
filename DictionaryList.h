@@ -14,10 +14,20 @@ public:
             head_ = new Node(*dictionaryList.head_);
             Node* currentNode = head_;
             Node* currentNodeOfOther = dictionaryList.head_->nextNode;
-            while (currentNodeOfOther!=nullptr) {
-                currentNode->nextNode = new Node(*currentNodeOfOther);
-                currentNodeOfOther = currentNodeOfOther->nextNode;
-                currentNode = currentNode->nextNode;
+            try {
+                while (currentNodeOfOther != nullptr) {
+                    currentNode->nextNode = new Node(*currentNodeOfOther);
+                    currentNodeOfOther = currentNodeOfOther->nextNode;
+                    currentNode = currentNode->nextNode;
+                }
+            }
+            catch (const std::bad_alloc& e) {
+                Node* currentNodeDeleteLoop = head_;
+                while (currentNodeDeleteLoop != nullptr) {
+                    Node* nodeToDelete = currentNodeDeleteLoop;
+                    currentNodeDeleteLoop = currentNodeDeleteLoop->nextNode;
+                    delete nodeToDelete;
+                }
             }
         }
     }
@@ -89,8 +99,10 @@ public:
     }
 
     bool remove(const KeyT& element) {
-        if (head_ != nullptr && head_->data == element && head_->nextNode == nullptr) {
-            delete head_;
+        if (head_ != nullptr && head_->data == element) {
+            Node* nodeToDelete = head_;
+            head_ = head_->nextNode;
+            delete nodeToDelete;
             return true;
         }
 
@@ -125,16 +137,13 @@ public:
     }
 
     void merge(DictionaryList& other) {
-        if (&other == this) {
+        if (&other == this || other.head_ == nullptr) {
             return;
         }
 
         Node* currentNode = head_;
         Node* otherNode = other.head_;
 
-        if (otherNode == nullptr) {
-            return;
-        }
         if (currentNode == nullptr) {
             head_ = other.head_;
             other.head_ = nullptr;
@@ -153,7 +162,9 @@ public:
         else {
             newNode = currentNode;
             currentNode = currentNode->nextNode;
+            Node* duplicateNodeToDelete = otherNode;
             otherNode = otherNode->nextNode;
+            delete duplicateNodeToDelete;
         }
         Node* newHead = newNode;
 
@@ -186,7 +197,9 @@ public:
             if (otherNode->data == currentNode->data) {
                 newNode->nextNode = currentNode;
                 currentNode = currentNode->nextNode;
+                Node* duplicateNodeToDelete = otherNode;
                 otherNode = otherNode->nextNode;
+                delete duplicateNodeToDelete;
                 newNode = newNode->nextNode;
                 continue;
             }

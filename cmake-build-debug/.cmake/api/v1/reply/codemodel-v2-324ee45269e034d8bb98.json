@@ -6,10 +6,10 @@
 			[
 				{
 					"build" : ".",
-					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
 					"minimumCMakeVersion" : 
 					{
-						"string" : "3.28"
+						"string" : "3.25"
 					},
 					"projectIndex" : 0,
 					"source" : ".",
@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "Dict::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Dict-Debug-d189e5c5c9ab8d8ef845.json",
+					"jsonFile" : "target-Dict-Debug-11a771e62594a90d445e.json",
 					"name" : "Dict",
 					"projectIndex" : 0
 				}
@@ -49,12 +49,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/home/artem/spbstu/sem2/aisd/DictData/Dict/cmake-build-debug",
-		"source" : "/home/artem/spbstu/sem2/aisd/DictData/Dict"
+		"build" : "C:/spbstu/sem2/aisd/CppLinkedList/cmake-build-debug",
+		"source" : "C:/spbstu/sem2/aisd/CppLinkedList"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 6
+		"minor" : 4
 	}
 }
