@@ -8,7 +8,6 @@ class DictionaryList {
 public:
     DictionaryList() = default;
 
-    //copy constructor
     DictionaryList(const DictionaryList& dictionaryList) {
         if (dictionaryList.head_ != nullptr) {
             head_ = new Node(*dictionaryList.head_);
@@ -32,9 +31,7 @@ public:
         }
     }
 
-    //move constructor
     DictionaryList(DictionaryList&& dictionaryList) noexcept {
-        std::cout << "move constr!\n";
         std::swap(head_, dictionaryList.head_);
     }
 
@@ -47,7 +44,6 @@ public:
         }
     }
 
-    //copy assignment operator
     DictionaryList<KeyT>& operator=(const DictionaryList<KeyT>& dictionaryList) {
         if (&dictionaryList == this) {
             return *this;
@@ -58,9 +54,11 @@ public:
         return *this;
     }
 
-    //move assignment operator
     DictionaryList<KeyT>& operator=(DictionaryList<KeyT>&& dictionaryList) noexcept {
-        std::swap(head_, dictionaryList.head_);
+        if (this == &dictionaryList) {
+            DictionaryList copy = DictionaryList(std::move(dictionaryList));
+            swap(copy);
+        }
         return *this;
     }
 

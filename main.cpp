@@ -178,7 +178,37 @@ void testMoveConstructor() {
 
     std::cout << "Try dict2(dict(dict1))\n\n";
 
+    DictionaryList<int> dict2 = std::move(DictionaryList(dict1));
+
+    std::cout << "dict1:\n" << dict1 << "\n\n";
+    std::cout << "dict2:\n" << dict2 << "\n\n";
+    std::cout << "#################################\n";
+}
+
+void testMoveAssignment() {
+    std::cout << "#################################\n";
+    std::cout << "testMoveAssignment:\n\n";
+    DictionaryList<int> dict1 = DictionaryList<int>();
+
+    dict1.insert(10);
+    dict1.insert(500);
+    dict1.insert(9);
+    dict1.insert(12);
+    dict1.insert(18);
+
+
+    std::cout << "dict 1 created:\n" << dict1 << "\n\n";
+
     DictionaryList<int> dict2 = DictionaryList<int>();
+
+    dict2.insert(10);
+    dict2.insert(20);
+    dict2.insert(1);
+
+    std::cout << "dict 2 created:\n" << dict2 << "\n\n";
+    std::cout << "Try dict2 = std::move(DictionaryList(dict1));\n\n";
+
+    dict2 = std::move(DictionaryList(dict1));
 
     std::cout << "dict1:\n" << dict1 << "\n\n";
     std::cout << "dict2:\n" << dict2 << "\n\n";
@@ -506,6 +536,7 @@ void myTests() {
     testCopySelfAssignment();
 
     testMoveConstructor();
+    testMoveAssignment();
 
     testInsert();
     testInsertToEmpty();
