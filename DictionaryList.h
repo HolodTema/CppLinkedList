@@ -55,7 +55,7 @@ public:
     }
 
     DictionaryList<KeyT>& operator=(DictionaryList<KeyT>&& dictionaryList) noexcept {
-        if (this == &dictionaryList) {
+        if (this != &dictionaryList) {
             DictionaryList copy = DictionaryList(std::move(dictionaryList));
             swap(copy);
         }
@@ -220,7 +220,7 @@ private:
         KeyT data;
         Node* nextNode;
 
-        Node(KeyT data, Node* nextNode):
+        Node(KeyT data, Node* nextNode) :
             data(data),
             nextNode(nextNode)
         { }

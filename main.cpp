@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <string>
 #include "DictionaryList.h"
 
@@ -178,7 +178,7 @@ void testMoveConstructor() {
 
     std::cout << "Try dict2(dict(dict1))\n\n";
 
-    DictionaryList<int> dict2 = std::move(DictionaryList(dict1));
+    DictionaryList<int> dict2 = std::move(DictionaryList<int>(dict1));
 
     std::cout << "dict1:\n" << dict1 << "\n\n";
     std::cout << "dict2:\n" << dict2 << "\n\n";
@@ -208,7 +208,7 @@ void testMoveAssignment() {
     std::cout << "dict 2 created:\n" << dict2 << "\n\n";
     std::cout << "Try dict2 = std::move(DictionaryList(dict1));\n\n";
 
-    dict2 = std::move(DictionaryList(dict1));
+    dict2 = std::move(DictionaryList<int>(dict1));
 
     std::cout << "dict1:\n" << dict1 << "\n\n";
     std::cout << "dict2:\n" << dict2 << "\n\n";
